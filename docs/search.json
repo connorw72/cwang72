@@ -9,8 +9,29 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "cwang72.github.io",
+    "title": "Connor Wang",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2"
+    "text": "Hello! My name is Connor. I am a sophomore at Pomona College pursuing a Computer Science degree with a minor in data science. Outside of school I am on the Pomona-Pitzer football, where we compete in the SCIAC. My hobbies include going to the gym, playing video games, and spending time with friends."
+  },
+  {
+    "objectID": "dataviz/bobsburgers.html",
+    "href": "dataviz/bobsburgers.html",
+    "title": "Bobs Burgers",
+    "section": "",
+    "text": "# A tibble: 272 × 8\n   season episode dialogue_density avg_length sentiment_variance unique_words\n    &lt;dbl&gt;   &lt;dbl&gt;            &lt;dbl&gt;      &lt;dbl&gt;              &lt;dbl&gt;        &lt;dbl&gt;\n 1      1       1            0.930       37.5               3.32          960\n 2      1       2            0.994       33.8               3.99          950\n 3      1       3            0.992       31.1               4.08          915\n 4      1       4            0.994       32.2               3.71          892\n 5      1       5            0.994       34.1               3.78          888\n 6      1       6            0.994       33.2               3.30          921\n 7      1       7            0.993       37.2               3.60          936\n 8      1       8            0.993       42.0               4.26          937\n 9      1       9            0.993       36.9               4.20          896\n10      1      10            0.993       39.7               3.32          990\n# ℹ 262 more rows\n# ℹ 2 more variables: question_ratio &lt;dbl&gt;, exclamation_ratio &lt;dbl&gt;"
+  },
+  {
+    "objectID": "dataviz/bobsburgers.html#references",
+    "href": "dataviz/bobsburgers.html#references",
+    "title": "Bobs Burgers",
+    "section": "References",
+    "text": "References\nPoncest. “Poncest/Bobsburgersr: Collection of Datasets from the Bob’s Burgers Animated Sitcom.” GitHub, github.com/poncest/bobsburgersR. Accessed 15 Feb. 2025.\nRfordatascience. “Tidytuesday/Data/2024/2024-11-19/Readme.Md at Main · Rfordatascience/Tidytuesday.” GitHub, github.com/rfordatascience/tidytuesday/blob/main/data/2024/2024-11-19/readme.md. Accessed 15 Feb. 2025."
+  },
+  {
+    "objectID": "dataviz/horrormovies.html#references",
+    "href": "dataviz/horrormovies.html#references",
+    "title": "Horror Movies",
+    "section": "References",
+    "text": "References\nThe Movie Database (TMDB), www.themoviedb.org/. Accessed 15 Feb. 2025.\nRfordatascience. “Tidytuesday/Data/2022/2022-11-01 at Main · Rfordatascience/Tidytuesday.” GitHub, github.com/rfordatascience/tidytuesday/tree/main/data/2022/2022-11-01. Accessed 15 Feb. 2025."
   }
 ]

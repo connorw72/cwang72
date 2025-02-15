@@ -1,0 +1,33 @@
+---
+title: "Bobs Burgers"
+description: |
+  Analysis of Bob's Burgers dialogue data from TidyTuesday
+author: Connor Wang
+date: February 15, 2025
+format: html
+---
+
+```{r echo=FALSE, results = "hide", message=FALSE, warning=FALSE}
+library(tidyverse)
+
+episode_metrics <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2024/2024-11-19/episode_metrics.csv')
+
+episode_metrics
+```
+
+```{r echo=FALSE}
+ggplot(episode_metrics, aes(x = question_ratio, y = exclamation_ratio)) +
+  geom_point(color = "blue") + 
+  labs(
+    title = "Question Ratio vs. Exclamation Ratio in Bob's Burgers episodes",
+    x = "Ratio of lines with questions",
+    y = "Ratio of lines with exclamations"
+  )
+```
+
+## References
+Poncest. “Poncest/Bobsburgersr: Collection of Datasets from the Bob’s Burgers Animated Sitcom.” GitHub, github.com/poncest/bobsburgersR. Accessed 15 Feb. 2025. 
+
+Rfordatascience. “Tidytuesday/Data/2024/2024-11-19/Readme.Md at Main · Rfordatascience/Tidytuesday.” GitHub, github.com/rfordatascience/tidytuesday/blob/main/data/2024/2024-11-19/readme.md. Accessed 15 Feb. 2025. 
+
+

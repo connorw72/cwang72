@@ -3,18 +3,24 @@ project:
   output-dir: docs
 
 website:
-  title: "cwang72.github.io"
+  title: "Connor Wang"
   navbar:
     left:
-      - href: index.qmd
-        text: Home
-      - about.qmd
+      - text: About
+        href: index.qmd
+      - text: Data Viz
+        menu:
+          - text: "Bob's Burgers"
+            href: dataviz/bobsburgers.qmd
+          - text: "Horror Movies"
+            href: dataviz/horrormovies.qmd
 
 format:
   html:
-    theme: cosmo
+    theme: simplex
     css: styles.css
     toc: true
+    page-layout: full
 
 editor: visual
 

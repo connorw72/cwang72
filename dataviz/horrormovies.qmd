@@ -1,0 +1,32 @@
+---
+title: "Horror Movies"
+description: |
+  Analysis of Horror Movie data from TidyTuesday
+author: Connor Wang
+date: February 15, 2025
+format: html
+---
+
+```{r echo=FALSE, results="hide", message=FALSE, warning=FALSE}
+library(tidyverse)
+horror_movies <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2022/2022-11-01/horror_movies.csv')
+
+horror_movies
+```
+
+```{r echo=FALSE}
+ggplot(horror_movies, aes(x = budget, y = revenue)) +
+  geom_point(color = "red") +
+  labs(
+    title = "Horror Movie Budget versus Revenue",
+    x = "Budget",
+    y = "Revenue"
+  )
+```
+
+## References
+The Movie Database (TMDB), www.themoviedb.org/. Accessed 15 Feb. 2025. 
+
+Rfordatascience. “Tidytuesday/Data/2022/2022-11-01 at Main · Rfordatascience/Tidytuesday.” GitHub, github.com/rfordatascience/tidytuesday/tree/main/data/2022/2022-11-01. Accessed 15 Feb. 2025. 
+
+

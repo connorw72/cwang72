@@ -25,8 +25,7 @@ ggplot(horror_movies, aes(x = budget, y = revenue)) +
 ```
 
 ## References
-The Movie Database (TMDB), www.themoviedb.org/. Accessed 15 Feb. 2025. 
 
-Rfordatascience. “Tidytuesday/Data/2022/2022-11-01 at Main · Rfordatascience/Tidytuesday.” GitHub, github.com/rfordatascience/tidytuesday/tree/main/data/2022/2022-11-01. Accessed 15 Feb. 2025. 
+The Movie Database (TMDB), www.themoviedb.org/. Accessed 15 Feb. 2025.
 
-
+Rfordatascience. “Tidytuesday/Data/2022/2022-11-01 at Main · Rfordatascience/Tidytuesday.” GitHub, github.com/rfordatascience/tidytuesday/tree/main/data/2022/2022-11-01. Accessed 15 Feb. 2025.

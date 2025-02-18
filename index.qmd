@@ -8,6 +8,8 @@ about:
       href: https://www.linkedin.com/in/connor-wang-3300822ab/
     - text: GitHub
       href: https://github.com/connorw72
+    - text: Repo for This Website
+      href: https://github.com/connorw72/cwang72
 ---
 
 Hello! My name is Connor. I am a sophomore at Pomona College pursuing a Computer Science degree with a minor in data science. Outside of school I am on the Pomona-Pitzer football, where we compete in the SCIAC. My hobbies include going to the gym, playing video games, and spending time with friends.

@@ -24,6 +24,8 @@ ggplot(horror_movies, aes(x = budget, y = revenue)) +
   )
 ```
 
+Based on our scatterplot, higher budgets do not always lead to higher revenues. The highest revenue came from an average budget.
+
 ## References
 
 The Movie Database (TMDB), www.themoviedb.org/. Accessed 15 Feb. 2025.

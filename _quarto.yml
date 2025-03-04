@@ -8,13 +8,14 @@ website:
     left:
       - text: About
         href: index.qmd
+      - text: Netflix Data Analysis
+        href: project2.qmd
       - text: Data Viz
         menu:
           - text: "Bob's Burgers"
             href: dataviz/bobsburgers.qmd
           - text: "Horror Movies"
             href: dataviz/horrormovies.qmd
-
 format:
   html:
     theme: simplex

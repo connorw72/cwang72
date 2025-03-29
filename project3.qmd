@@ -1,0 +1,65 @@
+---
+title: "Fast Food"
+description: |
+  A test for correlation between calories and sodium content in fast food items.
+author: Connor Wang
+date: March 2, 2025
+format: html
+---
+
+```{r, results='hide', warning=FALSE, message=FALSE}
+library(readr)
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+
+fastfood <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018/2018-09-04/fastfood_calories.csv")
+```
+
+## Plan
+
+For the small simulation study I will develop a lineup protocol for visual inference to investigate there is a statistically significant connection between calorie and sodium content in fast food items across various restaurants. In order to do this I have found a TidyTuesday dataset that includes nutritional information sourced from fastfoodnutrition.org. In order to test this possible relation I will use plots to determine if there is a connection that is more extreme than what would be expected under a null hypothesis of no correlation between calorie content and sodium content. If the representative plot is recognizable amongst many null plots, then the relationship is not due to pure chance and we have visual evidence to prove this.
+
+```{r warning=FALSE, message=FALSE}
+calories_sodium <- fastfood %>%
+  filter(!is.na(calories), !is.na(sodium)) %>%
+  select(item, restaurant, calories, sodium)
+
+null <- function(data) {
+  data %>%
+    mutate(sodium = sample(sodium))
+}
+
+null_data <- map(1:19, ~null(calories_sodium) %>%
+                   mutate(plot_id = as.character(.x)))
+
+true_data <- calories_sodium %>%
+  mutate(plot_id = "20")
+
+combine_data <- bind_rows(null_data) %>%
+  bind_rows(true_data) %>%
+  mutate(plot_id = fct_shuffle(factor(plot_id)))
+
+ggplot(combine_data, aes(x = calories, y = sodium)) +
+  geom_point() +
+  geom_smooth() +
+  facet_wrap(~plot_id) + 
+  labs(
+    title = "Calories vs. Sodium in Fast Food Items",
+    x = "Calories",
+    y = "Sodium"
+  )
+              
+```
+
+The plots above represent 19 simulated versions of the fast food data, with one plot showing the real data and relationship between calories and sodium as observed from the TidyTuesday dataset. The others randomly shuffled the sodium values in order to create randomization and remove association between calories and sodium. When reviewing all the plots, plot 20 stands out with a strong positive linear relationship. Plot 20 also corresponds to the real data, providing evidence that there is a true connection in the relationship between calories and sodium. The other simulated plots contain variously scattered data points, ultimately resulting in pretty flat lines with no true relationship or pattern observed. Thus, we have evidence a true statistical relationship between higher calories and more sodium content in fast food items.
+
+## End Description
+
+In this lineup protocol for visual inference simulation, I cleaned the fast food dataset from TidyTuesday in order to observe a potential relationship between calories and sodium. I created a function to create simulated/null datasets, which I then put side by side with a graph of the real data to see if the real data stood out amongst the others. From this, we were able to easily identify the plot of real data as discussed above, providing evidence that there is a strong correlation between higher calories and higher sodium content in fast food items. This finding generally tells us that that fast food items are extremely unhealthy, but worse than we thought - along with having a high calorie content these items will also come with lots of sodium, which means its even worse for you than it would be if just one of the contents was high.
+
+## References
+
+“Fast Food Nutrition Facts.” *FastFoodNutrition.Org*, fastfoodnutrition.org/. Accessed 28 Mar. 2025.
+
+Rfordatascience. “Tidytuesday/Data/2018/2018-09-04 at Main · Rfordatascience/Tidytuesday.” *GitHub*, github.com/rfordatascience/tidytuesday/tree/main/data/2018/2018-09-04. Accessed 28 Mar. 2025.

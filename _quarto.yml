@@ -10,6 +10,8 @@ website:
         href: index.qmd
       - text: Netflix Data Analysis
         href: project2.qmd
+      - text: Fast Food Simulation
+        href: project3.qmd
       - text: Data Viz
         menu:
           - text: "Bob's Burgers"

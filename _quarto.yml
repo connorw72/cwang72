@@ -12,6 +12,8 @@ website:
         href: project2.qmd
       - text: Fast Food Simulation
         href: project3.qmd
+      - text: Amazon's AI Bias
+        href: project4.qmd
       - text: Data Viz
         menu:
           - text: "Bob's Burgers"

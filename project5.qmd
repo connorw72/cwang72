@@ -54,6 +54,8 @@ HAVING num_arrests > 300
 ORDER BY state, num_arrests DESC
 ```
 
+The SQL query creates a table with information regarding the number of arrests made in Maryland, Colorado, and Arizona, categorized by race. The information is limited to data points over 300 arrests made as anything lower was not a significant piece of information. It is compiled into one table, where it displays each state, with the top data point representing the race that had the most arrests made in that state. It is then put into the table "arrests_table" which is used to create the visualization of the arrests made.
+
 ```{r warning=FALSE, message=FALSE}
 ggplot(arrests_table, aes(x = subject_race, y = num_arrests, fill = state)) +
   geom_col(position = "dodge") +
@@ -96,6 +98,8 @@ HAVING num_citations > 1000
 ORDER BY state, num_citations DESC
 ```
 
+The SQL query creates a table with information regarding the number of citations given in Maryland, Colorado, and Arizona, categorized by race. The information is limited to data points over 1000 citations given as anything lower was not a significant piece of information. It is compiled into one table, where it displays each state, with the top data point representing the race that had the most citations given in that state. It is then put into the table "citations_table" which is used to create the visualization of the citations given.
+
 ```{r warning=FALSE, message=FALSE}
 ggplot(citations_table, aes(x = subject_race, y = num_citations, fill = state)) +
   geom_col(position = "dodge") +
@@ -137,6 +141,8 @@ HAVING num_warnings > 5000
 
 ORDER BY state, num_warnings DESC
 ```
+
+The SQL query creates a table with information regarding the number of warnings given in Maryland, Colorado, and Arizona, categorized by race. The information is limited to data points over 5000 warnings given as anything lower was not a significant piece of information. It is compiled into one table, where it displays each state, with the top data point representing the race that had the most warnings given in that state. It is then put into the table "warnings_table" which is used to create the visualization of the warnings given.
 
 ```{r warning=FALSE, message=FALSE}
 ggplot(warnings_table, aes(x = subject_race, y = num_warnings, fill = state)) +

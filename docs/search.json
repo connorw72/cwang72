@@ -14,6 +14,62 @@
     "text": "Hello! My name is Connor. I am a sophomore at Pomona College pursuing a Computer Science degree with a minor in data science. Outside of school I am on the Pomona-Pitzer football, where we compete in the SCIAC. My hobbies include going to the gym, playing video games, and spending time with friends."
   },
   {
+    "objectID": "project5.html",
+    "href": "project5.html",
+    "title": "Arrests and Warnings categorized by race across the states of Arizona, Maryland, and Colorado",
+    "section": "",
+    "text": "library(ggplot2)\ncon_traffic &lt;- DBI::dbConnect(\n  RMariaDB::MariaDB(),\n  dbname = \"traffic\",\n  host = Sys.getenv(\"TRAFFIC_HOST\"),\n  user = Sys.getenv(\"TRAFFIC_USER\"),\n  password = Sys.getenv(\"TRAFFIC_PWD\")\n)"
+  },
+  {
+    "objectID": "project5.html#introduction",
+    "href": "project5.html#introduction",
+    "title": "Arrests and Warnings categorized by race across the states of Arizona, Maryland, and Colorado",
+    "section": "Introduction",
+    "text": "Introduction\nWhen a traffic stop is made, a cop can choose to arrest an individual, write them a citation, or give them a warning. A warning is the most minor, while a citation tends to mean a fine and other possible punishments, with an arrest being the worst as there is more reason to believe that a true crime has been committed. Using the Stanford Open Policing Project, I wanted to explore data regarding the amount of warnings, citations, and arrests made based on race in various states. I thought this was interesting and important to look at to see if there are any trends based on the severity of the punishment given to an individual and their race. Given the diversity of the United States of America, I chose to use 3 states that represented different areas of the country - the west, through Arizona, the midwest through Colorado, and the east coast, through Maryland. Although they have different populations, with Arizona over a million people more than the next one, Maryland, I thought it was best to get a good representation of different regions of the country. I split the data up based on the punishment given to the person who was stopped, which I then used to create a bar graphs with side by side comparisons split by race and state.\n\nSELECT 'Maryland' AS state, subject_race, COUNT(*) AS num_arrests\nFROM md_statewide_2020_04_01\nWHERE arrest_made = 1\nGROUP BY subject_race \nHAVING num_arrests &gt; 300\n\nUNION\n\nSELECT 'Arizona' AS state, subject_race, COUNT(*) AS num_arrests\nFROM az_statewide_2020_04_01\nWHERE arrest_made = 1\nGROUP BY subject_race \nHAVING num_arrests &gt; 300\n\nUNION\n\nSELECT 'Colorado' AS state, subject_race, COUNT(*) AS num_arrests\nFROM co_statewide_2020_04_01\nWHERE arrest_made = 1\nGROUP BY subject_race \nHAVING num_arrests &gt; 300\n\nORDER BY state, num_arrests DESC\n\n\nggplot(arrests_table, aes(x = subject_race, y = num_arrests, fill = state)) +\n  geom_col(position = \"dodge\") +\n  labs(\n    title = \"Number of arrests by race across the states \\n\n    Arizona, Colorado, and Maryland\",\n    x = \"Race\",\n    y = \"Number of Arrests\"\n  )\n\n\n\n\n\n\n\n\nThe bar graph represents the number of arrests made by race, with each race having three bars representative of the different states. Arizona has the most arrests made for every race. Although this can be attributed to its larger population, the amount of arrests made are also much larger than the other states. This could point to a possibility of more crime in Arizona than Colorado and Maryland, as the number of arrests are not proportional to the total population of the state. Maryland had similar amounts of arrests made for both black and white people, while the other states had much more arrests made on white people than made on black people. The amount of white people is the highest race arrested for each state, which is likely due to population makeup. Overall, there does not seem to be any alarming trends in the arrests made by state.\n\nSELECT 'Maryland' AS state, subject_race, COUNT(*) AS num_citations\nFROM md_statewide_2020_04_01\nWHERE citation_issued = 1\nGROUP BY subject_race \nHAVING num_citations &gt; 1000\n\nUNION\n\nSELECT 'Arizona' AS state, subject_race, COUNT(*) AS num_citations\nFROM az_statewide_2020_04_01\nWHERE citation_issued = 1\nGROUP BY subject_race \nHAVING num_citations &gt; 1000\n\nUNION\n\nSELECT 'Colorado' AS state, subject_race, COUNT(*) AS num_citations\nFROM co_statewide_2020_04_01\nWHERE citation_issued = 1\nGROUP BY subject_race \nHAVING num_citations &gt; 1000\n\nORDER BY state, num_citations DESC\n\n\nggplot(citations_table, aes(x = subject_race, y = num_citations, fill = state)) +\n  geom_col(position = \"dodge\") +\n  labs(\n    title = \"Number of citations given by race across the states \\n \n    Maryland, Arizona, and Colorado\",\n    x = \"Race\",\n    y = \"Number of Citations Issued\"\n  )\n\n\n\n\n\n\n\n\nThe bar graph represents the number of citations made by race, with each race having three bars to represent the different states. Arizona has an overwhelmingly high amount of citations given to white and hispanic people, while Maryland gave the most citations to black people. A clear difference is seen in Maryland and Arizona, where the numbers of citations given to white people and black people are similar in Maryland, while much more white people were given citations than black people in Arizona. The difference between hispanic and white in Arizona is quite substantial as well, with the number of citations written to hispanic people about half that of white people. Based on our data, we can see that it is contant across the states for white people to be written the most citations.\n\nSELECT 'Maryland' AS state, subject_race, COUNT(*) AS num_warnings\nFROM md_statewide_2020_04_01\nWHERE warning_issued = 1\nGROUP BY subject_race \nHAVING num_warnings &gt; 5000 \n\nUNION\n\nSELECT 'Arizona' AS state, subject_race, COUNT(*) AS num_warnings\nFROM az_statewide_2020_04_01\nWHERE warning_issued = 1\nGROUP BY subject_race \nHAVING num_warnings &gt; 5000 \n\nUNION \n\nSELECT 'Colorado' AS state, subject_race, COUNT(*) AS num_warnings\nFROM co_statewide_2020_04_01\nWHERE warning_issued = 1\nGROUP BY subject_race \nHAVING num_warnings &gt; 5000 \n\nORDER BY state, num_warnings DESC\n\n\nggplot(warnings_table, aes(x = subject_race, y = num_warnings, fill = state)) +\n  geom_col(position = \"dodge\") +\n  labs(\n    title = \"Number of warnings given by race across the states \\n\n    Arizona, Colorado, and Maryland\",\n    x = \"State\",\n    y = \"Number of Warnings issued\"\n  )\n\n\n\n\n\n\n\n\nThe bar graph represents the number of warnings issued by race, with each race having three bars to separate data amongst the states. Likely as a result of population differences, white people have the highest amount of warnings issued to them across all states. The second highest for the state of Maryland is black people, while the second highest for Arizona is Hispanic. In Colorado, the second is Hispanic however it is much less than that of white people. It could be a reflection of the proportion of the population, but the difference in citations for black people and white people is substantial in Arizona and Colorado, however not as far off in Maryland."
+  },
+  {
+    "objectID": "project5.html#conclusion",
+    "href": "project5.html#conclusion",
+    "title": "Arrests and Warnings categorized by race across the states of Arizona, Maryland, and Colorado",
+    "section": "Conclusion",
+    "text": "Conclusion\nIn order to create our visualizations of arrests made, citations issued, and warnings given by race across the states of Arizona, Maryland, and Colorado in traffic stops, I utilized SQL queries. Each dataset had a variable pertaining to arrests, citations, or warnings. I extracted number of each that was given, grouping by race in order to give the total number of each category given by race. I then used union to combine data and create tables for each type of punishment given. I followed the same steps for each arrests, citations, and warnings, where the variable was given a value of 1 if it was the outcome, and 0 if it was not, so 1 was seen as a datapoint that I wanted to track. I then removed the lowest numbers by race, as they were often just the “other” or “unknown” category, so the data was not extremely useful. From these combined tables I then created the graphs to visualize the data and look for any clear trends."
+  },
+  {
+    "objectID": "project5.html#references",
+    "href": "project5.html#references",
+    "title": "Arrests and Warnings categorized by race across the states of Arizona, Maryland, and Colorado",
+    "section": "References",
+    "text": "References\nPierson, Emma, Camelia Simoiu, Jan Overgoor, Sam Corbett-Davies, Daniel Jenson, Amy Shoemaker, Vignesh Ramachandran, et al. 2020. “A Large-Scale Analysis of Racial Disparities in Police Stops Across the United States.” Nature Human Behaviour, 1–10."
+  },
+  {
+    "objectID": "dataviz/horrormovies.html",
+    "href": "dataviz/horrormovies.html",
+    "title": "Horror Movies",
+    "section": "",
+    "text": "Based on our scatterplot, higher budgets do not always lead to higher revenues. The highest revenue came from an average budget."
+  },
+  {
+    "objectID": "dataviz/horrormovies.html#references",
+    "href": "dataviz/horrormovies.html#references",
+    "title": "Horror Movies",
+    "section": "References",
+    "text": "References\nThe Movie Database (TMDB), www.themoviedb.org/. Accessed 15 Feb. 2025.\nRfordatascience. “Tidytuesday/Data/2022/2022-11-01 at Main · Rfordatascience/Tidytuesday.” GitHub, github.com/rfordatascience/tidytuesday/tree/main/data/2022/2022-11-01. Accessed 15 Feb. 2025."
+  },
+  {
+    "objectID": "dataviz/bobsburgers.html",
+    "href": "dataviz/bobsburgers.html",
+    "title": "Bobs Burgers",
+    "section": "",
+    "text": "Based on the scatterplot above, there is no clear correlation between amount of questions and exclamations."
+  },
+  {
+    "objectID": "dataviz/bobsburgers.html#references",
+    "href": "dataviz/bobsburgers.html#references",
+    "title": "Bobs Burgers",
+    "section": "References",
+    "text": "References\nPoncest. “Poncest/Bobsburgersr: Collection of Datasets from the Bob’s Burgers Animated Sitcom.” GitHub, github.com/poncest/bobsburgersR. Accessed 15 Feb. 2025.\nRfordatascience. “Tidytuesday/Data/2024/2024-11-19/Readme.Md at Main · Rfordatascience/Tidytuesday.” GitHub, github.com/rfordatascience/tidytuesday/blob/main/data/2024/2024-11-19/readme.md. Accessed 15 Feb. 2025."
+  },
+  {
     "objectID": "project4.html",
     "href": "project4.html",
     "title": "Exploring Bias in an Amazon Hiring AI",
@@ -54,34 +110,6 @@
     "title": "Exploring Bias in an Amazon Hiring AI",
     "section": "Identifiable Data",
     "text": "Identifiable Data\nWhen working with personal data it is very important to ensure that people are fine with their data being out there and used in ways that they might not actively know about. An easy way to be free of this ethical concern is to make sure the data is anonymous or old. This way, there are no privacy concerns as there is no way to connect the information in the data to specific people. In the case of the Amazon model, resumes are extremely identifiable documents. Although resumes differ from person to person, it will likely include information such as a full name, address, contact information, work history, and schools. All of these are ways to easily create links to individuals. While it is possible to make resumes somewhat anonymous and remove the direct links to people, there is no indication that Amazon did this with the resumes used to train the hiring algorithm. On top of this, the data being within 10 years does not make it old enough to fight ethical arguments against its use (ACLU). The data was likely stored and saved in development or logs which means a ton of personal data that is not exactly being stored safely. When data can store identifiers to an individual it is hard to protect the identity of the person.\n\nReferences\nInsight - Amazon Scraps Secret AI Recruiting Tool That Showed Bias against Women | Reuters, www.reuters.com/article/us-amazon-com-jobs-automation-insight-idUSKCN1MK08G/. Accessed 15 Apr. 2025.\n“Why Amazon’s Automated Hiring Tool Discriminated against Women: ACLU.” American Civil Liberties Union, 27 Feb. 2023, www.aclu.org/news/womens-rights/why-amazons-automated-hiring-tool-discriminated-against."
-  },
-  {
-    "objectID": "dataviz/bobsburgers.html",
-    "href": "dataviz/bobsburgers.html",
-    "title": "Bobs Burgers",
-    "section": "",
-    "text": "Based on the scatterplot above, there is no clear correlation between amount of questions and exclamations."
-  },
-  {
-    "objectID": "dataviz/bobsburgers.html#references",
-    "href": "dataviz/bobsburgers.html#references",
-    "title": "Bobs Burgers",
-    "section": "References",
-    "text": "References\nPoncest. “Poncest/Bobsburgersr: Collection of Datasets from the Bob’s Burgers Animated Sitcom.” GitHub, github.com/poncest/bobsburgersR. Accessed 15 Feb. 2025.\nRfordatascience. “Tidytuesday/Data/2024/2024-11-19/Readme.Md at Main · Rfordatascience/Tidytuesday.” GitHub, github.com/rfordatascience/tidytuesday/blob/main/data/2024/2024-11-19/readme.md. Accessed 15 Feb. 2025."
-  },
-  {
-    "objectID": "dataviz/horrormovies.html",
-    "href": "dataviz/horrormovies.html",
-    "title": "Horror Movies",
-    "section": "",
-    "text": "Based on our scatterplot, higher budgets do not always lead to higher revenues. The highest revenue came from an average budget."
-  },
-  {
-    "objectID": "dataviz/horrormovies.html#references",
-    "href": "dataviz/horrormovies.html#references",
-    "title": "Horror Movies",
-    "section": "References",
-    "text": "References\nThe Movie Database (TMDB), www.themoviedb.org/. Accessed 15 Feb. 2025.\nRfordatascience. “Tidytuesday/Data/2022/2022-11-01 at Main · Rfordatascience/Tidytuesday.” GitHub, github.com/rfordatascience/tidytuesday/tree/main/data/2022/2022-11-01. Accessed 15 Feb. 2025."
   },
   {
     "objectID": "project2.html",

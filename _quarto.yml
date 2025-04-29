@@ -14,6 +14,8 @@ website:
         href: project3.qmd
       - text: Amazon's AI Bias
         href: project4.qmd
+      - text: Arrests and Warnings
+        href: project5.qmd
       - text: Data Viz
         menu:
           - text: "Bob's Burgers"

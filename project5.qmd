@@ -8,10 +8,14 @@ format: html
 ---
 
 ```{r warning=FALSE, message=FALSE}
+#| code-fold: true
+#| code-summary: "R Packages"
 library(ggplot2)
 ```
 
 ```{r warning=FALSE, message=FALSE}
+#| code-fold: true
+#| code-summary: "Establish Database Connection"
 con_traffic <- DBI::dbConnect(
   RMariaDB::MariaDB(),
   dbname = "traffic",

@@ -18,7 +18,7 @@
     "href": "project5.html",
     "title": "Arrests and Warnings categorized by race across the states of Arizona, Maryland, and Colorado",
     "section": "",
-    "text": "library(ggplot2)\ncon_traffic &lt;- DBI::dbConnect(\n  RMariaDB::MariaDB(),\n  dbname = \"traffic\",\n  host = Sys.getenv(\"TRAFFIC_HOST\"),\n  user = Sys.getenv(\"TRAFFIC_USER\"),\n  password = Sys.getenv(\"TRAFFIC_PWD\")\n)"
+    "text": "R Packages\nlibrary(ggplot2)\nEstablish Database Connection\ncon_traffic &lt;- DBI::dbConnect(\n  RMariaDB::MariaDB(),\n  dbname = \"traffic\",\n  host = Sys.getenv(\"TRAFFIC_HOST\"),\n  user = Sys.getenv(\"TRAFFIC_USER\"),\n  password = Sys.getenv(\"TRAFFIC_PWD\")\n)"
   },
   {
     "objectID": "project5.html#introduction",

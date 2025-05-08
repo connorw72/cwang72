@@ -1,0 +1,235 @@
+---
+title: "Final Presentation"
+author: "Connor Wang"
+subtitle: "5/8/25"
+format:
+  revealjs:
+    scrollable: true
+    slide-number: true
+    show-slide-number: all
+    self-contained: false
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+## Project 1 - Data Visualization
+
+::: panel-tabset
+### Overview
+
+-   Two TidyTuesday datasets
+
+-   Data on Bob's Burgers Dialogue from various episodes.
+
+-   Data on how Horror Movies performed in the box office/how much the public enjoyed them.
+
+### Bob's Burgers
+
+-   American Sitcom with 15 seasons
+
+-   Follows Bob Belcher and his family, who own the restaurant Bob's Burgers
+
+    ```{r echo = FALSE, results = "hide", message=FALSE, warning=FALSE}
+    library(tidyverse)
+
+    episode_metrics <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2024/2024-11-19/episode_metrics.csv')
+
+    episode_metrics
+    ```
+
+    ```{r echo=FALSE}
+    head(episode_metrics)
+    ```
+
+-   Explored a possible relationship between the amount of lines that ended with questions versus exclamations
+
+    ```{r message=FALSE, warning=FALSE}
+    #| output-location: column
+    ggplot(episode_metrics, aes(x = question_ratio, y = exclamation_ratio)) +
+      geom_point(color = "blue") + 
+      labs(
+        title = "Question Ratio vs. Exclamation Ratio in Bob's Burgers episodes",
+        x = "Ratio of lines with questions",
+        y = "Ratio of lines with exclamations"
+      )
+    ```
+
+-   No clear trends from scatterplot, more questions does not mean more excitement in an epsiode.
+
+### Horror Movies
+
+-   Popular genre of movies meant to evoke feelings of fear and terror
+
+-   Since 2017, around 40+ horror movies are released each year
+
+    ```{r results = "hide", echo=FALSE, message=FALSE, warning=FALSE}
+    library(tidyverse)
+    horror_movies <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2022/2022-11-01/horror_movies.csv')
+
+    horror_movies
+    ```
+
+    ```{r echo=FALSE}
+    head(horror_movies)
+    ```
+
+-   Explored relationship between a movie's budget and revenue
+
+    ```{r message=FALSE, warning=FALSE}
+    #| output-location: column
+
+    ggplot(horror_movies, aes(x = budget, y = revenue)) +
+      geom_point(color = "red") +
+      labs(
+        title = "Horror Movie Budget versus Revenue",
+        x = "Budget",
+        y = "Revenue"
+      )
+    ```
+
+-   No clear trends from scatterplot, spending more money does not necessarily mean you will make more money.
+:::
+
+## Project 2 - Netflix Data Analysis
+
+```{r echo=FALSE, results='hide', warning=FALSE, message=FALSE}
+library(tidyverse)
+library(ggplot2)
+netflix_titles <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2021/2021-04-20/netflix_titles.csv')
+
+netflix_titles
+```
+
+-   Netflix is a popular streaming service consisting of TV shows, documentaries, movies, and more.
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+head(netflix_titles)
+```
+
+-   Created three questions of interest regarding the information from the dataset.
+
+## Has movie duration changed over time?
+
+-   Data from the mid 1900s to 2022.
+
+-   Films from multiple countries and genres on Netflix.
+
+-   Manipulated data to include only movies that have a runtime of a hour or longer.
+
+    ```{r echo=FALSE, results='hide', warning=FALSE, message=FALSE}
+    library(tidyverse)
+    library(ggplot2)
+    netflix_titles <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2021/2021-04-20/netflix_titles.csv')
+
+    netflix_titles
+    ```
+
+    ```{r, warning=FALSE, message=FALSE}
+    movies_only <- netflix_titles %>%
+      filter(type == "Movie") %>%
+      mutate(movie_duration = as.numeric(str_extract(duration, "\\d+"))) %>%
+      filter(!is.na(duration) & movie_duration >= 60)%>%
+      arrange(release_year)%>%
+      select(type, release_year, duration, movie_duration)
+
+    head(movies_only)
+    ```
+
+    ```{r, warning=FALSE, message=FALSE}
+    ggplot(movies_only, aes(x = release_year, y = movie_duration)) + 
+      geom_point(color = "lightsalmon3") +
+      labs(
+        title = "Has Movie duration changed over time?",
+        x = "Year Released",
+        y = "Duration of Movie in Minutes(starting at 60)"
+      )
+    ```
+
+-   Found no trend, movie durations have stayed in a similar range over the years.
+
+## Movies and Shows about the future
+
+-   Dataset included a brief description about each piece of media.
+
+-   Analyzed the number of films, TV shows, documentaries, etc. that were about the future categorized by country.
+
+    ```{r echo=FALSE, results='hide', warning=FALSE, message=FALSE}
+    library(tidyverse)
+    library(ggplot2)
+    netflix_titles <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2021/2021-04-20/netflix_titles.csv')
+
+    netflix_titles
+    ```
+
+    ```{r, message=FALSE, warning=FALSE}
+    content_about_future <- netflix_titles %>%
+      filter(str_detect(description, "(?i)future")) %>%
+      filter(!is.na(country)) %>%
+      group_by(country) %>%
+      summarise(count = sum(n())) %>%
+      arrange(desc(count)) %>%
+      slice_head(n = 10)
+
+    head(content_about_future)
+    ```
+
+    ```{ggplot(content_about_future, aes(x = country, y = count)) +}
+      geom_col(fill = "plum3") + 
+      labs(
+        title = "Countries with TV Shows and Movies about the 'future'",
+        x = "Country",
+        y = "Number of TV Shows/Movies"
+      ) +
+      theme(axis.text.x = element_text(size = 7))
+
+    ```
+
+-   United States had the most, but likely because most of the media was from the US to begin with.
+
+-   Most countries are similar, no country is overly creative about the future.
+
+## Words preceding 'of'
+
+-   Dataset included titles of many different works of media.
+
+-   Analyzed which words most commonly came before 'of' in a title.
+
+-   Chose 'of' because of how common it is used - ex: story of, legend of, etc.
+
+    ```{r echo=FALSE, results='hide', warning=FALSE, message=FALSE}
+    library(tidyverse)
+    library(ggplot2)
+    netflix_titles <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2021/2021-04-20/netflix_titles.csv')
+
+    netflix_titles
+    ```
+
+    ```{r, message=FALSE, warning=FALSE}
+    words <- netflix_titles %>%
+      mutate(of = str_extract(str_to_lower(title), "\\b\\w+(?= of)")) %>%
+      filter(!is.na(of)) %>%
+      group_by(of) %>%
+      summarise(n = n()) %>%
+      arrange(desc(n)) %>%
+      slice_head(n = 10)
+    head(words)
+    ```
+
+    ```{r, message=FALSE, warning=FALSE}
+    ggplot(words, aes(x = of, y = n)) +
+      geom_col(aes(fill = of)) + 
+      labs(
+        title = "10 Most common words that come before 'of' in TV show/movie titles",
+        x = "Word before 'of'",
+        y = "Number of titles that it appears before 'of' in"
+      )
+    ```
+
+-   Most common words were (as predicted) legend, story.
+
+-   Similar movie title formats are recycled.
+
+# Thank You! {background-color="lightblue"}

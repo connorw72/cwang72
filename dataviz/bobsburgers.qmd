@@ -7,28 +7,47 @@ date: February 15, 2025
 format: html
 ---
 
-```{r echo=FALSE, results = "hide", message=FALSE, warning=FALSE}
-library(tidyverse)
+Using data compiled by Steven Ponce(2024), Jon Harmon(2024) curated a dataset consisting of dialogue information from Bob's Burgers episodes for the purpose of TidyTuesday. Ponce collected this data through three sources, Schlesinger and Benjamin on Wikipedia, IMDb, and Springfield! Springfield! Bob's Burgers is an American Sitcom that debuted in 2011. The show follows Bob Belcher, his wife, and his three kids as he works to the restaurant he inherited, Bob's Burgers, up and running. The show has found great success, airing 15 seasons over the years. The show debuted on Fox, where it continues to air, and can be found on various streaming services. The successful comedy is full of hilarious, clever dialogue which has allowed it to continue for 15 seasons. The dataset which is called "episode_metrics" contains data on various lines from different seasons and episodes of Bob's Burgers. Using the data, I chose to explore a possible connection between lines with questions and lines with exclamations. If an episode has more questions asked, then there is a higher chance of more lines with exclamations which can often be punch lines or lines with more meaning. This would tell us more about the Bob's Burgers series and find possible patterns in the way the writers are thinking when they work on the script. If more questions leads to more exclamations, then there is likely a writer technique/comedy reasons for why this happens.
 
-episode_metrics <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2024/2024-11-19/episode_metrics.csv')
+```{r results = "hide", message=FALSE, warning=FALSE}
+#| code-fold: true
+#| code-summary: "Bobs Burgers Dataset"
+library(tidyverse) # 
 
-episode_metrics
+episode_metrics <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2024/2024-11-19/episode_metrics.csv') # read data
 ```
 
-```{r echo=FALSE}
-ggplot(episode_metrics, aes(x = question_ratio, y = exclamation_ratio)) +
-  geom_point(color = "blue") + 
-  labs(
+```{r, message=FALSE, warning=FALSE}
+#| code-fold: true
+#| code-summary: "Tibble of data"
+head(episode_metrics) # display head of data
+```
+
+The table represents a tibble of the first several rows from the dataset. The data includes 8 columns, with information regarding season, episode, dialogue density, average length, sentiment variance, unique words, question ratio, and exclamation ratio. Each row is an episode of Bob's burgers.
+
+```{r, message=FALSE, warning=FALSE}
+#| code-fold: true
+#| code-summary: "Plot Code"
+#| fig-alt: "Scatterplot showing the ratio of questions asked versus exclamations in different Bob's Burgers episodes across many seasons. There is no clear trend from the data meaning there is no correlation between the two."
+ggplot(episode_metrics, aes(x = question_ratio, y = exclamation_ratio)) + # takes question_ratio and exclamation_ratio from dataset to set x and y axis
+  geom_point(color = "blue") + # creates scatterplot with blue points
+  labs( # sets labels
     title = "Question Ratio vs. Exclamation Ratio in Bob's Burgers episodes",
     x = "Ratio of lines with questions",
     y = "Ratio of lines with exclamations"
   )
 ```
 
-Based on the scatterplot above, there is no clear correlation between amount of questions and exclamations.
+The scatterplot above represents the ratio of lines with questions, on the x-axis, compared to the ratio of lines with exclamations, on the y-axis. These dots represent different episodes across various seasons. From the data, we do not see any clear trends with regards to how many questions are asked and how many exclamations there are in a given episode. As a result, we see that there is likely no correlation between the two. It is just random based on what is happening in an episode, and what the writers believe is necessary in terms of how the dialogue of the episode will flow.
 
 ## References
 
-Poncest. “Poncest/Bobsburgersr: Collection of Datasets from the Bob’s Burgers Animated Sitcom.” GitHub, github.com/poncest/bobsburgersR. Accessed 15 Feb. 2025.
+“Bob's Burgers Episode Scripts.” Springfield! Springfield!, https://www.springfieldspringfield.co.uk/episode_scripts.php?tv-show=bobs-burgers.
 
-Rfordatascience. “Tidytuesday/Data/2024/2024-11-19/Readme.Md at Main · Rfordatascience/Tidytuesday.” GitHub, github.com/rfordatascience/tidytuesday/blob/main/data/2024/2024-11-19/readme.md. Accessed 15 Feb. 2025.
+“Bob's Burgers (TV Series 2011– ) - Episode list.” IMDb, https://www.imdb.com/title/tt1561755/episodes/?season=1. Accessed 7 May 2025.
+
+Harmon, Jon. “Bob's Burgers Episodes.” tidytuesday, 19 Nov. 2024, https://github.com/rfordatascience/tidytuesday/blob/main/data/2024/2024-11-19/readme.md.
+
+Ponces, Steven. 2024, “bobsburgersR.” tidytuesday, https://github.com/poncest/bobsburgersR.
+
+Schlesinger, Holly, and Benjamin, Jon. “List of Bob's Burgers episodes.” Wikipedia, https://en.wikipedia.org/wiki/List_of_Bob%27s_Burgers_episodes#Episodes. Accessed 7 May 2025.

@@ -16,7 +16,9 @@ website:
         href: project4.qmd
       - text: Arrests and Warnings
         href: project5.qmd
-      - text: Data Viz
+      - text: Presentation
+        href: presentation.qmd
+      - text: TidyTuesday Data
         menu:
           - text: "Bob's Burgers"
             href: dataviz/bobsburgers.qmd

@@ -23,6 +23,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -111,11 +145,15 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link" href="../project5.html"> 
 <span class="menu-text">Arrests and Warnings</span></a>
   </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../presentation.html"> 
+<span class="menu-text">Presentation</span></a>
+  </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-data-viz" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">Data Viz</span>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tidytuesday-data" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">TidyTuesday Data</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-data-viz">    
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-tidytuesday-data">    
         <li>
     <a class="dropdown-item" href="../dataviz/bobsburgers.html">
  <span class="dropdown-text">Bob’s Burgers</span></a>
@@ -185,20 +223,61 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>With the purpose of exploring a dataset about horror movies dating back to the 1950s, Tasha Piro(2022) accessed data from The Movie Database. The data from Piro was then widely spread by Jon Harmon(2022) for the purpose of TidyTuesday. The movie industry is an important part of American society. Films provide sources of entertainment, education, emotional expression, as well as an activity for people of all ages to participate in. It is interesting to see how different movies fare, and how much money successful movies can make. For this analysis, I have chosen to look into the horror genre, and analyze differences in budgets and revenue across different horror movies, including ones that did and did not do well in the box office. Generally, you would expect movies that have more money invested into them to be better, and thus perform better in theatres and gain more revenue. However, there are always those few movies that have low budget and blow others out of the water as a result of clever writing and good storytelling. In order to see any possible trends regarding this, we using the “horror_movies” dataset, which included information on both budget and revenue of different horror movies. We then plotted these to check for any relationship between the two, assuming that higher budgets would lead to higher revenues.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Horror Movies Dataset</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>horror_movies <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">'https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2022/2022-11-01/horror_movies.csv'</span>) <span class="co"># read data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Tibble of data</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(horror_movies) <span class="co"># display head of data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 20
+       id original_title   title original_language overview tagline release_date
+    &lt;dbl&gt; &lt;chr&gt;            &lt;chr&gt; &lt;chr&gt;             &lt;chr&gt;    &lt;chr&gt;   &lt;date&gt;      
+1  760161 Orphan: First K… Orph… en                After e… There'… 2022-07-27  
+2  760741 Beast            Beast en                A recen… Fight … 2022-08-11  
+3  882598 Smile            Smile en                After w… Once y… 2022-09-23  
+4  756999 The Black Phone  The … en                Finney … Never … 2022-06-22  
+5  772450 Presencias       Pres… es                A man w… &lt;NA&gt;    2022-09-07  
+6 1014226 Sonríe           Sonr… es                &lt;NA&gt;     &lt;NA&gt;    2022-08-18  
+# ℹ 13 more variables: poster_path &lt;chr&gt;, popularity &lt;dbl&gt;, vote_count &lt;dbl&gt;,
+#   vote_average &lt;dbl&gt;, budget &lt;dbl&gt;, revenue &lt;dbl&gt;, runtime &lt;dbl&gt;,
+#   status &lt;chr&gt;, adult &lt;lgl&gt;, backdrop_path &lt;chr&gt;, genre_names &lt;chr&gt;,
+#   collection &lt;dbl&gt;, collection_name &lt;chr&gt;</code></pre>
+</div>
+</div>
+<p>The table represents a tibble of the first several rows from the dataset. The data includes 20 columns, with data such as title, language, overview, release date, budget, revenue, and more about each movie. Each row is a different horror movie.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Plot Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(horror_movies, <span class="fu">aes</span>(<span class="at">x =</span> budget, <span class="at">y =</span> revenue)) <span class="sc">+</span> <span class="co"># got budget and revenue data from dataset</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span> <span class="co">#create scatterplot with red points</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>( <span class="co"># set plot labels </span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Horror Movie Budget versus Revenue"</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Budget"</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Revenue"</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="horrormovies_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="horrormovies_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" alt="Scatterplot showing the budget spent on horror movies versus the revenue they gained. There was no clear trend that having a higher budget will make the movie more successful. The movie that had the highest revenue had a relatively low budget." width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Based on our scatterplot, higher budgets do not always lead to higher revenues. The highest revenue came from an average budget.</p>
+<p>The scatterplot above uses our “horror_movies” dataset to plot the budget of a movie on the x-axis, with revenue displayed on the y-axis. We would expect to see a relationship where the movies with a higher budget, further along the x-axis, would have the highest revenue values on the y-axis. This was not necessarily the case, as the movie that raked in the most revenue had a lower budget than many other movies. The majority of the horror movies do not have large budgets, and thus generate similar revenues. We do not see a trend that putting more money into a movie will necessarily mean more revenue. It is more important to have an intriguing story, good acting, and create a good movie than pour too much money into it.</p>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
-<p>The Movie Database (TMDB), www.themoviedb.org/. Accessed 15 Feb.&nbsp;2025.</p>
-<p>Rfordatascience. “Tidytuesday/Data/2022/2022-11-01 at Main · Rfordatascience/Tidytuesday.” GitHub, github.com/rfordatascience/tidytuesday/tree/main/data/2022/2022-11-01. Accessed 15 Feb.&nbsp;2025.</p>
+<p>Harmon, Jon. “Horror Movies.” tidytuesday, 11 Jan.&nbsp;2022, https://github.com/rfordatascience/tidytuesday/tree/main/data/2022/2022-11-01.</p>
+<p>Piro, Tasha. “Horror Movies.” Github, 2022, https://github.com/tashapiro/horror-movies.</p>
+<p>“TMDB.” The Movie Database (TMDB), https://www.themoviedb.org/. Accessed 7 May 2025.</p>
 
 
 </section>

@@ -145,11 +145,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link" href="./project5.html"> 
 <span class="menu-text">Arrests and Warnings</span></a>
   </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./presentation.html"> 
+<span class="menu-text">Presentation</span></a>
+  </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-data-viz" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">Data Viz</span>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tidytuesday-data" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">TidyTuesday Data</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-data-viz">    
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-tidytuesday-data">    
         <li>
     <a class="dropdown-item" href="./dataviz/bobsburgers.html">
  <span class="dropdown-text">Bob’s Burgers</span></a>
@@ -224,69 +228,97 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="cell">
+<details class="code-fold">
+<summary>R Packages</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <section id="dataset" class="level3">
 <h3 class="anchored" data-anchor-id="dataset">Dataset</h3>
-<p>The Dataset that I have chosen to explore is about Netflix shows. Netflix is a streaming service which includes various documentaries, TV shows, movies, and more. The data consists of TV shows and movies that were available on Netflix from 2019 to 2021. The data was collected through Flixable, a third-party Netflix search engine. The data includes the type of picture it is, such as movie or TV show, the title, the director, the cast, the country it originates from, the date it was added to netflix, the year it was released, the ratings(TV-MA, PG-13, etc.), the duration, what categories it is listed in, and the description of the picture. Through this information I have created various questions of interest that come with accompanying visuals in order to share my findings.</p>
+<p>Using the now discontinued third party Netflix search system, Flixable, Shivam Bansal (2021) compiled a dataset with information regarding media on the streaming platform. They posted it to Kaggle, the online platform for Data Scientists and Machine Learning purposes, likely with the hope of gaining interactions in the form of views, downloads, and engagement. The dataset was taken from Kaggle by Jon Harmon (2021) for the purpose of TidyTuesday. Netflix is a streaming service which includes various documentaries, TV shows, movies, and more. Through the information in the dataset I have created various questions of interest that come with accompanying visuals in order to share my findings.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>netflix_titles <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">'https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2021/2021-04-20/netflix_titles.csv'</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>netflix_titles</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold">
+<summary>Netflix Dataset</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>netflix_titles <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">'https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2021/2021-04-20/netflix_titles.csv'</span>) <span class="co"># load data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
+<div class="cell">
+<details class="code-fold">
+<summary>Tibble of data</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(netflix_titles) <span class="co"># display head of data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 12
+  show_id type    title director    cast  country date_added release_year rating
+  &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt; 
+1 s1      TV Show 3%    &lt;NA&gt;        João… Brazil  August 14…         2020 TV-MA 
+2 s2      Movie   7:19  Jorge Mich… Demi… Mexico  December …         2016 TV-MA 
+3 s3      Movie   23:59 Gilbert Ch… Tedd… Singap… December …         2011 R     
+4 s4      Movie   9     Shane Acker Elij… United… November …         2009 PG-13 
+5 s5      Movie   21    Robert Luk… Jim … United… January 1…         2008 PG-13 
+6 s6      TV Show 46    Serdar Akar Erda… Turkey  July 1, 2…         2016 TV-MA 
+# ℹ 3 more variables: duration &lt;chr&gt;, listed_in &lt;chr&gt;, description &lt;chr&gt;</code></pre>
+</div>
+</div>
+<p>The table represents a tibble of the first several rows of the dataset. The data includes 12 columns, with information on the type of media, the title, director, cast, country, date added, year released, rating, duration, and genre it is listed in. Each row is a title on Netflix.</p>
 </section>
 <section id="question-of-interest-1" class="level3">
 <h3 class="anchored" data-anchor-id="question-of-interest-1">Question of Interest 1</h3>
-<p>The first question of interest that I came up with for this dataset is how has movie duration changed over time? Since the data about what is streaming on Netflix included the duration of movies in minutes as well as the year they were released, I decided it would be interesting to note how this has changed over time. Going into it I assumed that movies have gotten longer over time. Movies that come out these days seem to always be two plus hours, often being two and a half hours or even three on some of the extreme cases. Although not all movies are included on Netflix, it would still give a good idea of how movies have trended in terms of duration over time. I found the opposite to be true. Based on the linear regression model I created below there is a clear downwards trend over time. Movies have in fact gotten shorter in duration throughout the years and. Save for some outliers, the general trend is the same with newer movies becoming shorter and shorter over time.</p>
+<p>The first question of interest that I came up with for this dataset is how has movie duration changed over time? Since the data about what is streaming on Netflix included the duration of movies in minutes as well as the year they were released, I decided it would be interesting to note how this has changed over time. Going into it I assumed that movies have gotten longer over time. Movies that come out these days seem to always be two plus hours, often being two and a half hours or even three on some of the extreme cases. Although not all movies are included on Netflix, it would still give a good idea of how movies have trended in terms of duration over time. In order to ensure a more accurate relationship, I removed all movies that did not have a runtime of over a hour. I figured that anything less meant it was a short film or some sort of documentary that would not accurately represent the runtimes of movies. Based on the scatterplot I created below there is not a clear trend in movie duration over time. Instead we see when the movie industry took off and there was a higher amount of movies being made , which occurred starting at the 2000s.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>movies_only <span class="ot">&lt;-</span> netflix_titles <span class="sc">%&gt;%</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">==</span> <span class="st">"Movie"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">movie_duration =</span> <span class="fu">as.numeric</span>(<span class="fu">str_extract</span>(duration, <span class="st">"</span><span class="sc">\\</span><span class="st">d+"</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(duration))</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(movies_only, <span class="fu">aes</span>(<span class="at">x =</span> release_year, <span class="at">y =</span> movie_duration)) <span class="sc">+</span> </span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"lightsalmon3"</span>) <span class="sc">+</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">color =</span> <span class="st">"steelblue3"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Has Movie duration increased over time?"</span>,</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Year Released"</span>,</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Duration of Movie in Minutes"</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold">
+<summary>Data Filtering and Plot Creation</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>movies_only <span class="ot">&lt;-</span> netflix_titles <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">==</span> <span class="st">"Movie"</span>) <span class="sc">%&gt;%</span> <span class="co">#movies only</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">movie_duration =</span> <span class="fu">as.numeric</span>(<span class="fu">str_extract</span>(duration, <span class="st">"</span><span class="sc">\\</span><span class="st">d+"</span>))) <span class="sc">%&gt;%</span> <span class="co"># only the numbers from the duration (says min originally)</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(duration) <span class="sc">&amp;</span> movie_duration <span class="sc">&gt;=</span> <span class="dv">60</span>) <span class="co"># only movies 60 mins or longer</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(movies_only, <span class="fu">aes</span>(<span class="at">x =</span> release_year, <span class="at">y =</span> movie_duration)) <span class="sc">+</span> <span class="co">#data from filtered dataset</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"lightsalmon3"</span>) <span class="sc">+</span> <span class="co">#scatterplot </span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>( <span class="co">#graph labels</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Has Movie duration changed over time?"</span>,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Year Released"</span>,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Duration of Movie in Minutes(starting at 60)"</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="project2_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="project2_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" alt="Scatterplot showing the duration of movies in minutes from the mid 1900s to 2022. There is no clear trend in the data and movies have stayed similar lenghts over time. there is an outlier in the late 2010s of a movie with a runtime longer than 300 minutes." width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Previously mentioned in the description of the question of interest, this plot depicts the release year of a movie on the x-axis versus the duration of the movie in minutes on the y-axis. This creates a comparison between movie duration over time. You see a negatively-sloped linear regression line, indicating that movie duration time has decreased in general over the years. Furthermore, more movies in general have come out as time has progressed which could be a part of it. There are more shorter movies out there as they are likely easier to produce than longer ones.</p>
+<p>Previously mentioned in the description of the question of interest, this plot depicts the release year of a movie on the x-axis versus the duration of the movie in minutes on the y-axis. This creates a comparison between movie duration over time. We do not see any clear trends in terms of how movie duration has changed over time, leading us to believe that it has not. As movies progressed they maintained a similar blueprint as the original ones, keeping similar runtimes that they believed was sufficient to tell the story that they were attempting to give their viewers. They did not see a point in making the movies extremely shorter or longer as time went on.</p>
 </section>
 <section id="question-of-interest-2" class="level3">
 <h3 class="anchored" data-anchor-id="question-of-interest-2">Question of Interest 2</h3>
 <p>The second question of interest that I came up with was which countries have the most TV Shows and Movies that are about the future. I wondered if there would be a connection to depictions of the future with countries that tend to be seen as more technologically advanced or first world. I explored the descriptions that included the word future in them and used this to determine if the picture had anything to do with the future. What I found generally aligned with what I thought as the United States had the highest amount of TV shows and movies dealing with ‘future’ ideas. This is also likely why I thought about this because I am exposed to so many shows and movies that align with this, having grown up watching Netflix in the states. The bar chart shows a large discrepancy from the United States to the next country, India. This uses only the top 10 countries that have future in descriptions.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>content_about_future <span class="ot">&lt;-</span> netflix_titles <span class="sc">%&gt;%</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(description, <span class="st">"(?i)future"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(country)) <span class="sc">%&gt;%</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(country) <span class="sc">%&gt;%</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">sum</span>(<span class="fu">n</span>())) <span class="sc">%&gt;%</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(count)) <span class="sc">%&gt;%</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(content_about_future, <span class="fu">aes</span>(<span class="at">x =</span> country, <span class="at">y =</span> count)) <span class="sc">+</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"plum3"</span>) <span class="sc">+</span> </span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Countries with TV Shows and Movies about the 'future'"</span>,</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Country"</span>,</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Number of TV Shows/Movies"</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">7</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold">
+<summary>Data Filtering and Plot Creation</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>content_about_future <span class="ot">&lt;-</span> netflix_titles <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(description, <span class="st">"(?i)future"</span>)) <span class="sc">%&gt;%</span> <span class="co"># look for the word future in descriptions</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(country)) <span class="sc">%&gt;%</span> <span class="co"># remove titles where country is NA</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(country) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">sum</span>(<span class="fu">n</span>())) <span class="sc">%&gt;%</span> <span class="co"># group by country and count the number of times it appears</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(count)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">10</span>) <span class="co"># only show the top 10 countries</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(content_about_future, <span class="fu">aes</span>(<span class="at">x =</span> country, <span class="at">y =</span> count)) <span class="sc">+</span> <span class="co"># data from filtered dataset</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"plum3"</span>) <span class="sc">+</span> </span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>( <span class="co"># labels for data</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Countries with TV Shows and Movies about the 'future'"</span>,</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Country"</span>,</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Number of TV Shows/Movies"</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">7</span>)) <span class="co"># stop text from overlapping</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="project2_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="project2_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" alt="Bar chart showing the countries with the highest number of TV shows and movies about the 'future'. These titles are on Netflix, with the highest counts coming from the United States, India, and the United Kingdom." width="672"></p>
 </figure>
 </div>
 </div>
@@ -295,27 +327,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="question-of-interest-3" class="level3">
 <h3 class="anchored" data-anchor-id="question-of-interest-3">Question of Interest 3</h3>
-<p>The third question of interest that I came up with was which words come before the word ‘of’ the most in movie titles. I thought about this because there seem to be many shows and movies that use of, such as Pirates of the Caribbean, Wizard of Oz, and many more. I found this would be an interesting thing to see. I did not have much prediction going in, but after seeing the data it makes sense. Words such as story and legend tend to come before of. Many title creators likely see it as a good way of making a fantastical-sounding title, such as the story of ___ or the legend of ___. I used the title column in the data to create a lookaround that checked for ’ of’ following the word. This is how I got the 10 most used words before ‘of’, finding an interesting trend that I do not think many people would tend to think of.</p>
+<p>The third question of interest that I came up with was which words come before the word ‘of’ the most in movie/show titles. I thought about this because there seem to be many shows and movies that use of, such as Pirates of the Caribbean, Wizard of Oz, and many more. I found this would be an interesting thing to see. I did not have much prediction going in, but after seeing the data it makes sense. Words such as story and legend tend to come before of. Many title creators likely see it as a good way of making a fantastical-sounding title, such as the story of ___ or the legend of ___. I used the title column in the data to create a lookaround that checked for ’ of’ following the word. This is how I got the 10 most used words before ‘of’, finding an interesting trend that I do not think many people would tend to think of.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>words <span class="ot">&lt;-</span> netflix_titles <span class="sc">%&gt;%</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">of =</span> <span class="fu">str_extract</span>(<span class="fu">str_to_lower</span>(title), <span class="st">"</span><span class="sc">\\</span><span class="st">b</span><span class="sc">\\</span><span class="st">w+(?= of)"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(of)) <span class="sc">%&gt;%</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(of) <span class="sc">%&gt;%</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(words, <span class="fu">aes</span>(<span class="at">x =</span> of, <span class="at">y =</span> n)) <span class="sc">+</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">fill =</span> of)) <span class="sc">+</span> </span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"10 Most common words that precede 'of' in TV show/movie titles"</span>,</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Word before 'of'"</span>,</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Number of titles that it appears before 'of' in"</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold">
+<summary>Data Filtering and Plot Creation</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>words <span class="ot">&lt;-</span> netflix_titles <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">of =</span> <span class="fu">str_extract</span>(<span class="fu">str_to_lower</span>(title), <span class="st">"</span><span class="sc">\\</span><span class="st">b</span><span class="sc">\\</span><span class="st">w+(?= of)"</span>)) <span class="sc">%&gt;%</span> <span class="co"># extract the word that comes right before 'of'</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(of)) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(of) <span class="sc">%&gt;%</span> <span class="co"># group by non-NA words before 'of'</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> <span class="co"># count the number of times this word appears before 'of'</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">10</span>) <span class="co"># take only the top 10 words</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(words, <span class="fu">aes</span>(<span class="at">x =</span> of, <span class="at">y =</span> n)) <span class="sc">+</span> <span class="co"># data from filtered dataset</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">fill =</span> of)) <span class="sc">+</span> <span class="co">#create barplot with different colors for each word</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>( <span class="co"># graph labels</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"10 Most common words that come before 'of' in TV show/movie titles"</span>,</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Word before 'of'"</span>,</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Number of titles that it appears before 'of' in"</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="project2_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="project2_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" alt="Bar chart showing the 10 most common words that come before 'of' in Netflix TV show/movie titles. The two that appear the most are legends and story, with secrets being a close third." width="672"></p>
 </figure>
 </div>
 </div>
@@ -324,8 +359,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="references" class="level3">
 <h3 class="anchored" data-anchor-id="references">References</h3>
-<p>Bansal, Shivam. “Netflix Movies and TV Shows.” Kaggle, 27 Sept.&nbsp;2021, www.kaggle.com/datasets/shivamb/netflix-shows.</p>
-<p>Rfordatascience. “Tidytuesday/Data/2021/2021-04-20/Readme.Md at Main · Rfordatascience/Tidytuesday.” GitHub, github.com/rfordatascience/tidytuesday/blob/main/data/2021/2021-04-20/readme.md. Accessed 2 Mar.&nbsp;2025.</p>
+<p>Bansal, Shivam. “Netflix Movies and TV Shows.” Kaggle, 2021, https://www.kaggle.com/datasets/shivamb/netflix-shows. Accessed 7 May 2025.</p>
+<p>“Flixable.” Flixable, https://flixable.com/. Accessed 7 May 2025.</p>
+<p>Harmon, Jon. “Netflix Shows.” Github, 2021, https://github.com/rfordatascience/tidytuesday/blob/main/data/2021/2021-04-20/readme.md.</p>
 
 
 </section>

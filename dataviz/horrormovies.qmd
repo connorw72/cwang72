@@ -7,27 +7,42 @@ date: February 15, 2025
 format: html
 ---
 
-```{r echo=FALSE, results="hide", message=FALSE, warning=FALSE}
-library(tidyverse)
-horror_movies <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2022/2022-11-01/horror_movies.csv')
+With the purpose of exploring a dataset about horror movies dating back to the 1950s, Tasha Piro(2022) accessed data from The Movie Database. The data from Piro was then widely spread by Jon Harmon(2022) for the purpose of TidyTuesday. The movie industry is an important part of American society. Films provide sources of entertainment, education, emotional expression, as well as an activity for people of all ages to participate in. It is interesting to see how different movies fare, and how much money successful movies can make. For this analysis, I have chosen to look into the horror genre, and analyze differences in budgets and revenue across different horror movies, including ones that did and did not do well in the box office. Generally, you would expect movies that have more money invested into them to be better, and thus perform better in theatres and gain more revenue. However, there are always those few movies that have low budget and blow others out of the water as a result of clever writing and good storytelling. In order to see any possible trends regarding this, we using the "horror_movies" dataset, which included information on both budget and revenue of different horror movies. We then plotted these to check for any relationship between the two, assuming that higher budgets would lead to higher revenues.
 
-horror_movies
+```{r results = "hide", message=FALSE, warning=FALSE}
+#| code-fold: true
+#| code-summary: "Horror Movies Dataset"
+library(tidyverse)
+horror_movies <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2022/2022-11-01/horror_movies.csv') # read data
 ```
 
-```{r echo=FALSE}
-ggplot(horror_movies, aes(x = budget, y = revenue)) +
-  geom_point(color = "red") +
-  labs(
+```{r, message=FALSE, warning=FALSE}
+#| code-fold: true
+#| code-summary: "Tibble of data"
+head(horror_movies) # display head of data
+```
+
+The table represents a tibble of the first several rows from the dataset. The data includes 20 columns, with data such as title, language, overview, release date, budget, revenue, and more about each movie. Each row is a different horror movie.
+
+```{r, message=FALSE, warning=FALSE}
+#| code-fold: true
+#| code-summary: "Plot Code"
+#| fig-alt: "Scatterplot showing the budget spent on horror movies versus the revenue they gained. There was no clear trend that having a higher budget will make the movie more successful. The movie that had the highest revenue had a relatively low budget."
+ggplot(horror_movies, aes(x = budget, y = revenue)) + # got budget and revenue data from dataset
+  geom_point(color = "red") + #create scatterplot with red points
+  labs( # set plot labels 
     title = "Horror Movie Budget versus Revenue",
     x = "Budget",
     y = "Revenue"
   )
 ```
 
-Based on our scatterplot, higher budgets do not always lead to higher revenues. The highest revenue came from an average budget.
+The scatterplot above uses our "horror_movies" dataset to plot the budget of a movie on the x-axis, with revenue displayed on the y-axis. We would expect to see a relationship where the movies with a higher budget, further along the x-axis, would have the highest revenue values on the y-axis. This was not necessarily the case, as the movie that raked in the most revenue had a lower budget than many other movies. The majority of the horror movies do not have large budgets, and thus generate similar revenues. We do not see a trend that putting more money into a movie will necessarily mean more revenue. It is more important to have an intriguing story, good acting, and create a good movie than pour too much money into it.
 
 ## References
 
-The Movie Database (TMDB), www.themoviedb.org/. Accessed 15 Feb. 2025.
+Harmon, Jon. “Horror Movies.” tidytuesday, 11 Jan. 2022, https://github.com/rfordatascience/tidytuesday/tree/main/data/2022/2022-11-01.
 
-Rfordatascience. “Tidytuesday/Data/2022/2022-11-01 at Main · Rfordatascience/Tidytuesday.” GitHub, github.com/rfordatascience/tidytuesday/tree/main/data/2022/2022-11-01. Accessed 15 Feb. 2025.
+Piro, Tasha. “Horror Movies.” Github, 2022, https://github.com/tashapiro/horror-movies.
+
+“TMDB.” The Movie Database (TMDB), https://www.themoviedb.org/. Accessed 7 May 2025.

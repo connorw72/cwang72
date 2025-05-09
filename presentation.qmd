@@ -176,16 +176,9 @@ head(netflix_titles)
     head(content_about_future)
     ```
 
-    ```{ggplot(content_about_future, aes(x = country, y = count)) +}
-      geom_col(fill = "plum3") + 
-      labs(
-        title = "Countries with TV Shows and Movies about the 'future'",
-        x = "Country",
-        y = "Number of TV Shows/Movies"
-      ) +
-      theme(axis.text.x = element_text(size = 7))
+    \`\`\`{ggplot(content_about_future, aes(x = country, y = count)) +} geom_col(fill = "plum3") + labs( title = "Countries with TV Shows and Movies about the 'future'", x = "Country", y = "Number of TV Shows/Movies" ) + theme(axis.text.x = element_text(size = 7))
 
-    ```
+    \`\`\`
 
 -   United States had the most, but likely because most of the media was from the US to begin with.
 

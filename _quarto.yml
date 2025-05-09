@@ -27,6 +27,7 @@ website:
 format:
   html:
     theme: simplex
+    mainfont: roboto
     css: styles.css
     toc: true
     page-layout: full

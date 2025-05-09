@@ -181,6 +181,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#arrests" id="toc-arrests" class="nav-link" data-scroll-target="#arrests">Arrests</a></li>
+  <li><a href="#citations" id="toc-citations" class="nav-link" data-scroll-target="#citations">Citations</a></li>
+  <li><a href="#warnings" id="toc-warnings" class="nav-link" data-scroll-target="#warnings">Warnings</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
@@ -245,209 +248,237 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>When a traffic stop is made, a cop can choose to arrest an individual, write them a citation, or give them a warning. A warning is the most minor, while a citation tends to mean a fine and other possible punishments, with an arrest being the worst as there is more reason to believe that a true crime has been committed. Using the Stanford Open Policing Project, I wanted to explore data regarding the number of warnings, citations, and arrests made based on race in various states. I thought this was interesting and important to look at to see if there are any trends based on the severity of the punishment given to an individual and their race. Given the diversity of the United States of America, I chose to use 3 states that represented different areas of the country - the west, through Arizona, the midwest through Colorado, and the east coast, through Maryland. Although they have different populations, with Arizona over a million people more than the next one, Maryland, I thought it was best to get a good representation of different regions of the country. I split the data up based on the punishment given to the person who was stopped, which I then used to create a bar graphs with side by side comparisons split by race and state.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="st">'Maryland'</span> <span class="kw">AS</span> state, </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  subject_race,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> total_stops,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">SUM</span>(arrest_made) <span class="kw">AS</span> num_arrests,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">SUM</span>(arrest_made) <span class="op">*</span> <span class="fl">1.0</span> <span class="op">/</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> arrest_rate</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> md_statewide_2020_04_01</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> arrest_made <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> subject_race </span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="kw">HAVING</span> num_arrests <span class="op">&gt;</span> <span class="dv">300</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>5 records</caption>
-<colgroup>
-<col style="width: 13%">
-<col style="width: 33%">
-<col style="width: 17%">
-<col style="width: 17%">
-<col style="width: 17%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">state</th>
-<th style="text-align: left;">subject_race</th>
-<th style="text-align: right;">total_stops</th>
-<th style="text-align: right;">num_arrests</th>
-<th style="text-align: right;">arrest_rate</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Maryland</td>
-<td style="text-align: left;">asian/pacific islander</td>
-<td style="text-align: right;">912</td>
-<td style="text-align: right;">912</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Maryland</td>
-<td style="text-align: left;">black</td>
-<td style="text-align: right;">24420</td>
-<td style="text-align: right;">24420</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Maryland</td>
-<td style="text-align: left;">hispanic</td>
-<td style="text-align: right;">6477</td>
-<td style="text-align: right;">6477</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Maryland</td>
-<td style="text-align: left;">other</td>
-<td style="text-align: right;">921</td>
-<td style="text-align: right;">921</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Maryland</td>
-<td style="text-align: left;">white</td>
-<td style="text-align: right;">32793</td>
-<td style="text-align: right;">32793</td>
-<td style="text-align: right;">1</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p>The Stanford Open Policing Project(2020) is a team of researchers and journalists at Stanford University. With the goal of improving investigation and interaction between the police and the public, this team of researchers, including Pomona College’s own Amy Shoemaker (2020), gathered records from millions of traffic stops. They then analyze and release records from these stops. When a traffic stop is made, a cop can choose to arrest an individual, write them a citation, or give them a warning. A warning is the most minor, while a citation tends to mean a fine and other possible punishments, with an arrest being the worst as there is more reason to believe that a true crime has been committed. I thought this was interesting and important to look at to see if there are any trends based on the severity of the punishment given to an individual and their race. Given the diversity of the United States of America, I chose to use 3 states that represented different areas of the country - the west, through Arizona, the midwest through Colorado, and the east coast, through Maryland. Although they have different populations, with Arizona over a million people more than the second highest population, Maryland, I thought it was best to get a good representation of different regions of the country. I filtered and used the data to create rates of arrests, warnings, and citations given across races. I then created bar graphs to display differences across states based on this information.</p>
+</section>
+<section id="arrests" class="level2">
+<h2 class="anchored" data-anchor-id="arrests">Arrests</h2>
 <div class="cell" data-output.var="arrests_table">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="st">'Maryland'</span> <span class="kw">AS</span> state, subject_race, <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> num_arrests</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> md_statewide_2020_04_01</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> arrest_made <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> subject_race </span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">HAVING</span> num_arrests <span class="op">&gt;</span> <span class="dv">300</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="kw">UNION</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="st">'Arizona'</span> <span class="kw">AS</span> state, subject_race, <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> num_arrests</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> az_statewide_2020_04_01</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> arrest_made <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> subject_race </span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="kw">HAVING</span> num_arrests <span class="op">&gt;</span> <span class="dv">300</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="kw">UNION</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="st">'Colorado'</span> <span class="kw">AS</span> state, subject_race, <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> num_arrests</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> co_statewide_2020_04_01</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> arrest_made <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> subject_race </span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="kw">HAVING</span> num_arrests <span class="op">&gt;</span> <span class="dv">300</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold">
+<summary>Arrests Table</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Maryland arrests</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="st">'Maryland'</span> <span class="kw">AS</span> state, </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  subject_race,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> total_stops,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">SUM</span>(arrest_made) <span class="kw">AS</span> num_arrests,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">SUM</span>(arrest_made) <span class="op">*</span> <span class="fl">1.0</span> <span class="op">/</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> rate_of_arrests <span class="co">-- calculate rate of arrests</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> md_statewide_2020_04_01</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> subject_race <span class="kw">NOT</span> <span class="kw">IN</span> (<span class="st">'other'</span>, <span class="st">'unknown'</span>) <span class="co">-- remove other and unknown</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> subject_race </span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="kw">UNION</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">-- Arizona arrests</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="st">'Arizona'</span> <span class="kw">AS</span> state, </span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  subject_race,</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> total_stops,</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">SUM</span>(arrest_made) <span class="kw">AS</span> num_arrests,</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">SUM</span>(arrest_made) <span class="op">*</span> <span class="fl">1.0</span> <span class="op">/</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> rate_of_arrests <span class="co">-- calculate rate of arrests</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> az_statewide_2020_04_01</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> subject_race <span class="kw">NOT</span> <span class="kw">IN</span> (<span class="st">'other'</span>, <span class="st">'unknown'</span>) <span class="co">-- remove other and unknown</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> subject_race </span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="kw">UNION</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co">-- Colorado arrests</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="st">'Colorado'</span> <span class="kw">AS</span> state, </span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  subject_race,</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> total_stops,</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">SUM</span>(arrest_made) <span class="kw">AS</span> num_arrests,</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">SUM</span>(arrest_made) <span class="op">*</span> <span class="fl">1.0</span> <span class="op">/</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> rate_of_arrests <span class="co">-- calculate rate of arrests</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> co_statewide_2020_04_01</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> subject_race <span class="kw">NOT</span> <span class="kw">IN</span> (<span class="st">'other'</span>, <span class="st">'unknown'</span>) <span class="co">-- remove other and unknown</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> subject_race </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
-<p>The SQL query creates a table with information regarding the number of arrests made in Maryland, Colorado, and Arizona, categorized by race. The information is limited to racial groups with over 300 arrests, because lower values included “other” or “unknown”. It is compiled into one table, where it displays each state, with the top data point representing the race that had the most arrests made in that state. It is then put into the table “arrests_table” which is used to create the visualization of the arrests made.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(arrests_table, <span class="fu">aes</span>(<span class="at">x =</span> subject_race, <span class="at">y =</span> num_arrests, <span class="at">fill =</span> state)) <span class="sc">+</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Number of arrests by race across the states </span><span class="sc">\n</span></span>
+<div class="cell-output cell-output-stdout">
+<pre><code>     state           subject_race total_stops num_arrests rate_of_arrests
+1 Maryland asian/pacific islander       82912         912      0.01099961
+2 Maryland                  black     1385858       24420      0.01762085
+3 Maryland               hispanic      221681        6477      0.02921766
+4 Maryland                  white     1867333       32793      0.01756141
+5  Arizona asian/pacific islander       84767        9970      0.11761653
+6  Arizona                  black      222711       39581      0.17772360</code></pre>
+</div>
+</div>
+<p>The SQL query creates a table with information regarding the rates of arrests made from traffic stops in Maryland, Colorado, and Arizona, categorized by race. The information is filtered to remove data that did not have a race associated with it, such as ‘other’ and ‘unknown’. It is compiled into one table, represented by the tibble above. The main columns we are looking at here are state, subject_race, and rate_of_arrests. This is what we use to create our visualization of the data.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Plot of arrests</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(arrests_table, <span class="fu">aes</span>(<span class="at">x =</span> subject_race, <span class="at">y =</span> rate_of_arrests, <span class="at">fill =</span> state)) <span class="sc">+</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span> <span class="co"># bar plot with rate of arrests and race</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>( <span class="co"># plot labels</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Rate of arrests by race across the states </span><span class="sc">\n</span></span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="st">    Arizona, Colorado, and Maryland"</span>,</span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Race"</span>,</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Number of Arrests"</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Rate of Arrests"</span></span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="project5_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="project5_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" alt="The bar graph represents the rate of arrests made across the races Black, Hispanic, Asian/Pacific Islander, and White in the states Maryland, Arizona, and Colorado. Arizona issues the highest rate of warnings while Colorado issues the least for Asian/Pacific Islander, Hispanic, and White. Maryland issues the least for Black." width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>The bar graph represents the number of arrests made by race, with each race having three bars representative of the different states. Arizona has the most arrests made for every race. Although this can be attributed to its larger population, the number of arrests made are also much larger than the other states. Maryland had similar numbers of arrests made for both Black and White people, while the other states had much more arrests made on White people than made on Black people. The number of White people is the highest race arrested for each state, which is likely due to population makeup. Overall, there does not seem to be any alarming trends in the arrests made by state.</p>
+<p>The bar graph represents the rate of arrests made by race, with each race having three bars representative of the different states. Arizona has the highest rate of arrests made for every race, with Black individuals having the highest arrest rate. Maryland and Colorado had similar rates of arrests across all races, both having Asians/Pacific Islanders with the lowest rate of arrests and Hispanics having the highest rate of arrests out of these recorded traffic stops.</p>
+</section>
+<section id="citations" class="level2">
+<h2 class="anchored" data-anchor-id="citations">Citations</h2>
 <div class="cell" data-output.var="citations_table">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="st">'Maryland'</span> <span class="kw">AS</span> state, subject_race, <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> num_citations</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> md_statewide_2020_04_01</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> citation_issued <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> subject_race </span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="kw">HAVING</span> num_citations <span class="op">&gt;</span> <span class="dv">1000</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="kw">UNION</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="st">'Arizona'</span> <span class="kw">AS</span> state, subject_race, <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> num_citations</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> az_statewide_2020_04_01</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> citation_issued <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> subject_race </span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="kw">HAVING</span> num_citations <span class="op">&gt;</span> <span class="dv">1000</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="kw">UNION</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="st">'Colorado'</span> <span class="kw">AS</span> state, subject_race, <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> num_citations</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> co_statewide_2020_04_01</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> citation_issued <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> subject_race </span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="kw">HAVING</span> num_citations <span class="op">&gt;</span> <span class="dv">1000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold">
+<summary>Citations Table</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Maryland citations</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="st">'Maryland'</span> <span class="kw">AS</span> state, </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  subject_race,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> total_stops,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">SUM</span>(citation_issued) <span class="kw">AS</span> num_citations,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">SUM</span>(citation_issued) <span class="op">*</span> <span class="fl">1.0</span> <span class="op">/</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> rate_of_citation <span class="co">-- calculate citation rates</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> md_statewide_2020_04_01</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> subject_race <span class="kw">NOT</span> <span class="kw">IN</span> (<span class="st">'other'</span>, <span class="st">'unknown'</span>) <span class="co">-- remove other and unknown</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> subject_race </span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="kw">UNION</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">-- Arizona citations</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="st">'Arizona'</span> <span class="kw">AS</span> state, </span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  subject_race,</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> total_stops,</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">SUM</span>(citation_issued) <span class="kw">AS</span> num_citations,</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">SUM</span>(citation_issued) <span class="op">*</span> <span class="fl">1.0</span> <span class="op">/</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> rate_of_citation <span class="co">-- calculate citation rates</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> az_statewide_2020_04_01</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> subject_race <span class="kw">NOT</span> <span class="kw">IN</span> (<span class="st">'other'</span>, <span class="st">'unknown'</span>) <span class="co">-- remove other and unknown</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> subject_race </span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="kw">UNION</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="co">-- Colorado Citations</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="st">'Colorado'</span> <span class="kw">AS</span> state, </span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>  subject_race,</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> total_stops,</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">SUM</span>(citation_issued) <span class="kw">AS</span> num_citations,</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">SUM</span>(citation_issued) <span class="op">*</span> <span class="fl">1.0</span> <span class="op">/</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> rate_of_citation <span class="co">-- calculate citation rates</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> co_statewide_2020_04_01</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> subject_race <span class="kw">NOT</span> <span class="kw">IN</span> (<span class="st">'other'</span>, <span class="st">'unknown'</span>) <span class="co">-- remove other and unknown</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> subject_race </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
-<p>The SQL query creates a table with information regarding the number of citations given in Maryland, Colorado, and Arizona, categorized by race. The information is limited to racial groups with over 1000 citations, because lower values included “other” or “unknown”. It is compiled into one table, where it displays each state, with the top data point representing the race that had the most citations given in that state. It is then put into the table “citations_table” which is used to create the visualization of the citations given.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(citations_table, <span class="fu">aes</span>(<span class="at">x =</span> subject_race, <span class="at">y =</span> num_citations, <span class="at">fill =</span> state)) <span class="sc">+</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Number of citations given by race across the states </span><span class="sc">\n</span><span class="st"> </span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="st">    Maryland, Arizona, and Colorado"</span>,</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Race"</span>,</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Number of Citations Issued"</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     state           subject_race total_stops num_citations rate_of_citation
+1 Maryland asian/pacific islander       82912         25391        0.3062404
+2 Maryland                  black     1385858        440392        0.3177757
+3 Maryland               hispanic      221681         87685        0.3955459
+4 Maryland                  white     1867333        545569        0.2921648
+5  Arizona asian/pacific islander       84767         53415        0.6301391
+6  Arizona                  black      222711        127093        0.5706633</code></pre>
+</div>
+</div>
+<p>The SQL query creates a table with information regarding the rate of citations given from traffic stops in Maryland, Colorado, and Arizona, categorized by race. The data is filtered to remove races in the dataset labelled as ‘other’ or ‘unknown’. It is compiled into one table, represented by the tibble above. The data includes subject_race, state, and rate_of_citation which are used to create the visualization.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Plot of citations</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(citations_table, <span class="fu">aes</span>(<span class="at">x =</span> subject_race, <span class="at">y =</span> rate_of_citation, <span class="at">fill =</span> state)) <span class="sc">+</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span> <span class="co"># bar plot using rate of citation and subject race</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>( <span class="co"># graph labels</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Rate of citations given by race across the states </span><span class="sc">\n</span><span class="st"> </span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="st">    Maryland, Arizona, and Colorado"</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Race"</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Rate of Citations Issued"</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="project5_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="project5_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" alt="The bar graph represents the rate of citations given across the races Black, Hispanic, Asian/Pacific Islander, and White in the states Maryland, Arizona, and Colorado. Arizona issues the highest rate of citations while Colorado issues the least across all races." width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>The bar graph represents the number of citations made by race, with each race having three bars to represent the different states. Arizona has an overwhelmingly high number of citations given to White and Hispanic people, while Maryland gave the most citations to Black people. A clear difference is seen in Maryland and Arizona, where the numbers of citations given to White people and Black people are similar in Maryland, while much more White people were given citations than Black people in Arizona. The difference between Hispanic and White in Arizona is quite substantial as well, with the number of citations written to Hispanic people about half that of White people. Based on our data, we can see that it is constant across the states for White people to be written the most citations.</p>
+<p>Similar to the arrests data, Arizona has the highest rate of citations issued across all races. This time, Asians/ Pacific Islanders are recorded to have the highest rate of citations issued, while White individuals have the lowest. Maryland is similar, with White individuals having the lowest rate of citations issued, while Hispanics have the highest rate of citations issued. In Colorado, all rates are similar with little noticeable discrepancy.</p>
+</section>
+<section id="warnings" class="level2">
+<h2 class="anchored" data-anchor-id="warnings">Warnings</h2>
 <div class="cell" data-output.var="warnings_table">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="st">'Maryland'</span> <span class="kw">AS</span> state, subject_race, <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> num_warnings</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> md_statewide_2020_04_01</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> warning_issued <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> subject_race </span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="kw">HAVING</span> num_warnings <span class="op">&gt;</span> <span class="dv">5000</span> </span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="kw">UNION</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="st">'Arizona'</span> <span class="kw">AS</span> state, subject_race, <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> num_warnings</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> az_statewide_2020_04_01</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> warning_issued <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> subject_race </span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="kw">HAVING</span> num_warnings <span class="op">&gt;</span> <span class="dv">5000</span> </span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="kw">UNION</span> </span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="st">'Colorado'</span> <span class="kw">AS</span> state, subject_race, <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> num_warnings</span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> co_statewide_2020_04_01</span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> warning_issued <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> subject_race </span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="kw">HAVING</span> num_warnings <span class="op">&gt;</span> <span class="dv">5000</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold">
+<summary>Warnings Table</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Maryland warnings </span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="st">'Maryland'</span> <span class="kw">AS</span> state, </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  subject_race,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> total_stops,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">SUM</span>(warning_issued) <span class="kw">AS</span> num_warnings,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">SUM</span>(warning_issued) <span class="op">*</span> <span class="fl">1.0</span> <span class="op">/</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> rate_of_warnings <span class="co">-- calculate rate of warnings</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> md_statewide_2020_04_01</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> subject_race <span class="kw">NOT</span> <span class="kw">IN</span> (<span class="st">'other'</span>, <span class="st">'unknown'</span>) <span class="co">-- remove other and unknown</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> subject_race </span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="kw">UNION</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co">-- Arizona warnings</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="st">'Arizona'</span> <span class="kw">AS</span> state, </span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  subject_race,</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> total_stops,</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">SUM</span>(warning_issued) <span class="kw">AS</span> num_warnings,</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">SUM</span>(warning_issued) <span class="op">*</span> <span class="fl">1.0</span> <span class="op">/</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> rate_of_warnings <span class="co">-- calculate rate of warnings</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> az_statewide_2020_04_01</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> subject_race <span class="kw">NOT</span> <span class="kw">IN</span> (<span class="st">'other'</span>, <span class="st">'unknown'</span>) <span class="co">-- remove other and unknown</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> subject_race </span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="kw">UNION</span> </span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="co">-- Colorado warnings</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="st">'Colorado'</span> <span class="kw">AS</span> state, </span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>  subject_race,</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> total_stops,</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">SUM</span>(warning_issued) <span class="kw">AS</span> num_warnings,</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">SUM</span>(warning_issued) <span class="op">*</span> <span class="fl">1.0</span> <span class="op">/</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> rate_of_warnings <span class="co">-- calculate rate of warnings</span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> co_statewide_2020_04_01</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> subject_race <span class="kw">NOT</span> <span class="kw">IN</span> (<span class="st">'other'</span>, <span class="st">'unknown'</span>) <span class="co">-- remove other and unknown</span></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> subject_race </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
-<p>The SQL query creates a table with information regarding the number of warnings given in Maryland, Colorado, and Arizona, categorized by race. The information is limited to racial groups with over 5000 warnings, because lower values included “other” or “unknown”. It is compiled into one table, where it displays each state, with the top data point representing the race that had the most warnings given in that state. It is then put into the table “warnings_table” which is used to create the visualization of the warnings given.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(warnings_table, <span class="fu">aes</span>(<span class="at">x =</span> subject_race, <span class="at">y =</span> num_warnings, <span class="at">fill =</span> state)) <span class="sc">+</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Number of warnings given by race across the states </span><span class="sc">\n</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="st">    Arizona, Colorado, and Maryland"</span>,</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"State"</span>,</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Number of Warnings issued"</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     state           subject_race total_stops num_warnings rate_of_warnings
+1 Maryland asian/pacific islander       82912        40650        0.4902788
+2 Maryland                  black     1385858       607627        0.4384482
+3 Maryland               hispanic      221681        83862        0.3783004
+4 Maryland                  white     1867333       910453        0.4875686
+5  Arizona asian/pacific islander       84767        28751        0.3391768
+6  Arizona                  black      222711        80780        0.3627122</code></pre>
+</div>
+</div>
+<p>The SQL query creates a table with information regarding the rate of warnings issued from traffic stops in Maryland, Colorado, and Arizona, categorized by race. The information is filtered to remove data that had race represented as ‘other’ or ‘unknown’. It is compiled into one table, where it displays each state, subject_rate, and rate_of_warnings. The data from these columns is then used to create a visualization.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Plot of warnings</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(warnings_table, <span class="fu">aes</span>(<span class="at">x =</span> subject_race, <span class="at">y =</span> rate_of_warnings, <span class="at">fill =</span> state)) <span class="sc">+</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span> <span class="co"># create bar plot using rate of warnings and race</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>( <span class="co"># plot labels</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Rate of warnings given by race across the states </span><span class="sc">\n</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="st">    Arizona, Colorado, and Maryland"</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"State"</span>,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Rate of Warnings issued"</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="project5_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="project5_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" alt="The bar graph represents the rate of warnings given across the races Black, Hispanic, Asian/Pacific Islander, and White in the states Maryland, Arizona, and Colorado. Maryland issues the highest rate of warnings while Colorado issues the least across all races." width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>The bar graph represents the number of warnings issued by race, with each race having three bars to separate data amongst the states. Likely as a result of population differences, White people have the highest number of warnings issued to them across all states. The second highest for the state of Maryland is Black people, while the second highest for Arizona is Hispanic. In Colorado, the second is Hispanic however it is much less than that of White people. It could be a reflection of the proportion of the population, but the difference in citations for Black people and White people is substantial in Arizona and Colorado, however not as far off in Maryland.</p>
+<p>Unlike arrests and citations, Maryland has the highest rate of warnings issued across all races. Asian/Pacific Islanders have the highest rate of warnings, while Hispanics have the lowest rate. In Arizona, White individuals have the highest rate of warnings while Hispanics have the lowest, just slightly lower than Asian/Pacific Islander. In Colorado, numbers are very similar once again, except for a slight bump in warnings given to White people.</p>
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>In order to create our visualizations of arrests made, citations issued, and warnings given by race across the states of Arizona, Maryland, and Colorado in traffic stops, I utilized SQL queries. Each dataset had a variable pertaining to arrests, citations, or warnings. I extracted number of each that was given, grouping by race in order to give the total number of each category given by race. I then used union to combine data and create tables for each type of punishment given. I followed the same steps for each arrests, citations, and warnings, where the variable was given a value of 1 if it was the outcome, and 0 if it was not, so 1 was seen as a datapoint that I wanted to track. I then removed the lowest numbers by race, as they were often just the “other” or “unknown” category, so the data was not extremely useful. From these combined tables I then created the graphs to visualize the data and look for any clear trends.</p>
+<p>In order to create the visualizations of arrests made, citations issued, and warnings given by race across the states of Arizona, Maryland, and Colorado in traffic stops, I utilized SQL queries. Each dataset had a variable pertaining to arrests, citations, or warnings. I extracted the number of each punishment given, grouping by race then dividing by the number of total stops in order to calculate the rate of arrests, warnings, and citations given. I then used union to combine data and create tables for each type of punishment given. I also removed data points that labelled race as ‘other’ or ‘unknown’, as this data was not helpful to the analysis we were completing. An issue that makes the findings difficult to interpret is that the data did not include race breakdown across the three states that I chose to use. This would have made for even clearer data with more meaning, because it would be the rate of punishment from traffic stops, with regard to the percent of the population that the race made up.</p>
 </section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
+<p>“Data.” The Stanford Open Policing Project, 2020, https://openpolicing.stanford.edu/data/. Accessed 8 May 2025.</p>
 <p>Pierson, Emma, Camelia Simoiu, Jan Overgoor, Sam Corbett-Davies, Daniel Jenson, Amy Shoemaker, Vignesh Ramachandran, et al.&nbsp;2020. “A Large-Scale Analysis of Racial Disparities in Police Stops Across the United States.” <em>Nature Human Behaviour</em>, 1–10.</p>
 
 
